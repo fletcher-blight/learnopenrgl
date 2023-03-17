@@ -6,3 +6,12 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+rgl = { git = "https://github.com/fletcher-blight/rgl", branch = "feature/base-functionality" }
+
+anyhow = "1.0"
+image = "0.24"
+itertools = "0.10"
+rand = "0.8"
+russimp = { version = "2.0", features = ["prebuilt", "static-link"] }
+sdl2 = { version = "0.35", features = ["bundled", "static-link"] }
+nalgebra-glm = "0.18"
