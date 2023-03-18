@@ -268,7 +268,7 @@ impl Program {
         value: [f32; 16],
     ) -> anyhow::Result<()> {
         self.enable();
-        rgl::uniform_matrix_4f32v(location, rgl::MatrixOrderMajor::Row, &[value]);
+        rgl::uniform_matrix_4f32v_flat(location, rgl::MatrixOrderMajor::Row, &[value]);
         Ok(())
     }
 }

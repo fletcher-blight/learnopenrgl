@@ -238,8 +238,8 @@ fn main() -> anyhow::Result<()> {
         rgl::clear(rgl::ClearMask::COLOUR | rgl::ClearMask::DEPTH);
         rgl::use_program(shader_program);
 
-        rgl::uniform_matrix_4f32v(model, rgl::MatrixOrderMajor::Row, &[from_glm(&glm::one())]);
-        rgl::uniform_matrix_4f32v(
+        rgl::uniform_matrix_4f32v_flat(model, rgl::MatrixOrderMajor::Row, &[from_glm(&glm::one())]);
+        rgl::uniform_matrix_4f32v_flat(
             view,
             rgl::MatrixOrderMajor::Row,
             &[from_glm(&glm::look_at(
@@ -248,7 +248,7 @@ fn main() -> anyhow::Result<()> {
                 &camera_up,
             ))],
         );
-        rgl::uniform_matrix_4f32v(
+        rgl::uniform_matrix_4f32v_flat(
             projection,
             rgl::MatrixOrderMajor::Row,
             &[from_glm(&glm::perspective(

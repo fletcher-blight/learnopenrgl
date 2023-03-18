@@ -337,7 +337,7 @@ fn main() -> anyhow::Result<()> {
             &glm::vec3(1.0, 0.0, 0.0),
         );
         rgl::uniform_3f32(light_direction, light_dir[0], light_dir[1], light_dir[2]);
-        rgl::uniform_matrix_4f32v(
+        rgl::uniform_matrix_4f32v_flat(
             view,
             rgl::MatrixOrderMajor::Row,
             &[from_glm(&glm::look_at(
@@ -346,7 +346,7 @@ fn main() -> anyhow::Result<()> {
                 &camera_up,
             ))],
         );
-        rgl::uniform_matrix_4f32v(
+        rgl::uniform_matrix_4f32v_flat(
             projection,
             rgl::MatrixOrderMajor::Row,
             &[from_glm(&glm::perspective(
@@ -369,7 +369,7 @@ fn main() -> anyhow::Result<()> {
         rgl::bind_texture(rgl::TextureBindingTarget::Image2D, specular_texture);
 
         for (i, cube_position) in cube_positions.iter().enumerate() {
-            rgl::uniform_matrix_4f32v(
+            rgl::uniform_matrix_4f32v_flat(
                 model,
                 rgl::MatrixOrderMajor::Row,
                 &[from_glm(&glm::rotate(

@@ -157,8 +157,8 @@ fn main() -> anyhow::Result<()> {
             std::ffi::CStr::from_bytes_with_nul(b"light_colour\0")?,
         );
 
-        rgl::uniform_matrix_4f32v(model, rgl::MatrixOrderMajor::Row, &[from_glm(&glm::one())]);
-        rgl::uniform_matrix_4f32v(
+        rgl::uniform_matrix_4f32v_flat(model, rgl::MatrixOrderMajor::Row, &[from_glm(&glm::one())]);
+        rgl::uniform_matrix_4f32v_flat(
             view,
             rgl::MatrixOrderMajor::Row,
             &[from_glm(&glm::look_at(
@@ -167,7 +167,7 @@ fn main() -> anyhow::Result<()> {
                 &glm::vec3(0.0, 1.0, 0.0),
             ))],
         );
-        rgl::uniform_matrix_4f32v(
+        rgl::uniform_matrix_4f32v_flat(
             projection,
             rgl::MatrixOrderMajor::Row,
             &[from_glm(&glm::perspective(
@@ -208,7 +208,7 @@ fn main() -> anyhow::Result<()> {
             std::ffi::CStr::from_bytes_with_nul(b"light_colour\0")?,
         );
 
-        rgl::uniform_matrix_4f32v(
+        rgl::uniform_matrix_4f32v_flat(
             model,
             rgl::MatrixOrderMajor::Row,
             &[from_glm(&glm::scale(
@@ -216,7 +216,7 @@ fn main() -> anyhow::Result<()> {
                 &glm::make_vec3(&[0.2; 3]),
             ))],
         );
-        rgl::uniform_matrix_4f32v(
+        rgl::uniform_matrix_4f32v_flat(
             view,
             rgl::MatrixOrderMajor::Row,
             &[from_glm(&glm::look_at(
@@ -225,7 +225,7 @@ fn main() -> anyhow::Result<()> {
                 &glm::vec3(0.0, 1.0, 0.0),
             ))],
         );
-        rgl::uniform_matrix_4f32v(
+        rgl::uniform_matrix_4f32v_flat(
             projection,
             rgl::MatrixOrderMajor::Row,
             &[from_glm(&glm::perspective(
@@ -267,7 +267,7 @@ fn main() -> anyhow::Result<()> {
 
         {
             rgl::use_program(cube_shader_program);
-            rgl::uniform_matrix_4f32v(
+            rgl::uniform_matrix_4f32v_flat(
                 cube_model,
                 rgl::MatrixOrderMajor::Row,
                 &[from_glm(&glm::rotate(

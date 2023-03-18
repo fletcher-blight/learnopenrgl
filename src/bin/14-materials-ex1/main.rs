@@ -193,8 +193,8 @@ fn main() -> anyhow::Result<()> {
             std::ffi::CStr::from_bytes_with_nul(b"view_pos\0")?,
         );
 
-        rgl::uniform_matrix_4f32v(model, rgl::MatrixOrderMajor::Row, &[from_glm(&glm::one())]);
-        rgl::uniform_matrix_4f32v(
+        rgl::uniform_matrix_4f32v_flat(model, rgl::MatrixOrderMajor::Row, &[from_glm(&glm::one())]);
+        rgl::uniform_matrix_4f32v_flat(
             projection,
             rgl::MatrixOrderMajor::Row,
             &[from_glm(&glm::perspective(
@@ -240,7 +240,7 @@ fn main() -> anyhow::Result<()> {
             std::ffi::CStr::from_bytes_with_nul(b"light_colour\0")?,
         );
 
-        rgl::uniform_matrix_4f32v(
+        rgl::uniform_matrix_4f32v_flat(
             model,
             rgl::MatrixOrderMajor::Row,
             &[from_glm(&glm::scale(
@@ -248,7 +248,7 @@ fn main() -> anyhow::Result<()> {
                 &glm::make_vec3(&LIGHT_SCALE),
             ))],
         );
-        rgl::uniform_matrix_4f32v(
+        rgl::uniform_matrix_4f32v_flat(
             projection,
             rgl::MatrixOrderMajor::Row,
             &[from_glm(&glm::perspective(
@@ -318,7 +318,11 @@ fn main() -> anyhow::Result<()> {
 
         {
             rgl::use_program(cube_shader_program);
-            rgl::uniform_matrix_4f32v(cube_view, rgl::MatrixOrderMajor::Row, &[from_glm(&view)]);
+            rgl::uniform_matrix_4f32v_flat(
+                cube_view,
+                rgl::MatrixOrderMajor::Row,
+                &[from_glm(&view)],
+            );
             rgl::uniform_3f32(cube_view_pos, eye_pos[0], eye_pos[1], eye_pos[2]);
             rgl::uniform_3f32(cube_light_pos, light_pos[0], light_pos[1], light_pos[2]);
 
@@ -326,7 +330,7 @@ fn main() -> anyhow::Result<()> {
 
             // emerald
             {
-                rgl::uniform_matrix_4f32v(
+                rgl::uniform_matrix_4f32v_flat(
                     cube_model,
                     rgl::MatrixOrderMajor::Row,
                     &[from_glm(&glm::translate(
@@ -343,7 +347,7 @@ fn main() -> anyhow::Result<()> {
 
             // jade
             {
-                rgl::uniform_matrix_4f32v(
+                rgl::uniform_matrix_4f32v_flat(
                     cube_model,
                     rgl::MatrixOrderMajor::Row,
                     &[from_glm(&glm::translate(
@@ -360,7 +364,7 @@ fn main() -> anyhow::Result<()> {
 
             // obsidian
             {
-                rgl::uniform_matrix_4f32v(
+                rgl::uniform_matrix_4f32v_flat(
                     cube_model,
                     rgl::MatrixOrderMajor::Row,
                     &[from_glm(&glm::translate(
@@ -377,7 +381,7 @@ fn main() -> anyhow::Result<()> {
 
             // pearl
             {
-                rgl::uniform_matrix_4f32v(
+                rgl::uniform_matrix_4f32v_flat(
                     cube_model,
                     rgl::MatrixOrderMajor::Row,
                     &[from_glm(&glm::translate(
@@ -394,7 +398,7 @@ fn main() -> anyhow::Result<()> {
 
             // ruby
             {
-                rgl::uniform_matrix_4f32v(
+                rgl::uniform_matrix_4f32v_flat(
                     cube_model,
                     rgl::MatrixOrderMajor::Row,
                     &[from_glm(&glm::translate(
@@ -413,7 +417,7 @@ fn main() -> anyhow::Result<()> {
 
             // turqoise
             {
-                rgl::uniform_matrix_4f32v(
+                rgl::uniform_matrix_4f32v_flat(
                     cube_model,
                     rgl::MatrixOrderMajor::Row,
                     &[from_glm(&glm::translate(
@@ -430,7 +434,7 @@ fn main() -> anyhow::Result<()> {
 
             // brass
             {
-                rgl::uniform_matrix_4f32v(
+                rgl::uniform_matrix_4f32v_flat(
                     cube_model,
                     rgl::MatrixOrderMajor::Row,
                     &[from_glm(&glm::translate(
@@ -447,7 +451,7 @@ fn main() -> anyhow::Result<()> {
 
             // bronze
             {
-                rgl::uniform_matrix_4f32v(
+                rgl::uniform_matrix_4f32v_flat(
                     cube_model,
                     rgl::MatrixOrderMajor::Row,
                     &[from_glm(&glm::translate(
@@ -464,7 +468,7 @@ fn main() -> anyhow::Result<()> {
 
             // chrome
             {
-                rgl::uniform_matrix_4f32v(
+                rgl::uniform_matrix_4f32v_flat(
                     cube_model,
                     rgl::MatrixOrderMajor::Row,
                     &[from_glm(&glm::translate(
@@ -481,7 +485,7 @@ fn main() -> anyhow::Result<()> {
 
             // copper
             {
-                rgl::uniform_matrix_4f32v(
+                rgl::uniform_matrix_4f32v_flat(
                     cube_model,
                     rgl::MatrixOrderMajor::Row,
                     &[from_glm(&glm::translate(
@@ -500,7 +504,7 @@ fn main() -> anyhow::Result<()> {
 
             // gold
             {
-                rgl::uniform_matrix_4f32v(
+                rgl::uniform_matrix_4f32v_flat(
                     cube_model,
                     rgl::MatrixOrderMajor::Row,
                     &[from_glm(&glm::translate(
@@ -517,7 +521,7 @@ fn main() -> anyhow::Result<()> {
 
             // silver
             {
-                rgl::uniform_matrix_4f32v(
+                rgl::uniform_matrix_4f32v_flat(
                     cube_model,
                     rgl::MatrixOrderMajor::Row,
                     &[from_glm(&glm::translate(
@@ -534,7 +538,7 @@ fn main() -> anyhow::Result<()> {
 
             // black plastic
             {
-                rgl::uniform_matrix_4f32v(
+                rgl::uniform_matrix_4f32v_flat(
                     cube_model,
                     rgl::MatrixOrderMajor::Row,
                     &[from_glm(&glm::translate(
@@ -551,7 +555,7 @@ fn main() -> anyhow::Result<()> {
 
             // cyan plastic
             {
-                rgl::uniform_matrix_4f32v(
+                rgl::uniform_matrix_4f32v_flat(
                     cube_model,
                     rgl::MatrixOrderMajor::Row,
                     &[from_glm(&glm::translate(
@@ -568,7 +572,7 @@ fn main() -> anyhow::Result<()> {
 
             // white plastic
             {
-                rgl::uniform_matrix_4f32v(
+                rgl::uniform_matrix_4f32v_flat(
                     cube_model,
                     rgl::MatrixOrderMajor::Row,
                     &[from_glm(&glm::translate(
@@ -587,7 +591,7 @@ fn main() -> anyhow::Result<()> {
 
             // black rubber
             {
-                rgl::uniform_matrix_4f32v(
+                rgl::uniform_matrix_4f32v_flat(
                     cube_model,
                     rgl::MatrixOrderMajor::Row,
                     &[from_glm(&glm::translate(
@@ -604,7 +608,7 @@ fn main() -> anyhow::Result<()> {
 
             // green rubber
             {
-                rgl::uniform_matrix_4f32v(
+                rgl::uniform_matrix_4f32v_flat(
                     cube_model,
                     rgl::MatrixOrderMajor::Row,
                     &[from_glm(&glm::translate(
@@ -621,7 +625,7 @@ fn main() -> anyhow::Result<()> {
 
             // red rubber
             {
-                rgl::uniform_matrix_4f32v(
+                rgl::uniform_matrix_4f32v_flat(
                     cube_model,
                     rgl::MatrixOrderMajor::Row,
                     &[from_glm(&glm::translate(
@@ -638,7 +642,7 @@ fn main() -> anyhow::Result<()> {
 
             // white rubber
             {
-                rgl::uniform_matrix_4f32v(
+                rgl::uniform_matrix_4f32v_flat(
                     cube_model,
                     rgl::MatrixOrderMajor::Row,
                     &[from_glm(&glm::translate(
@@ -655,7 +659,7 @@ fn main() -> anyhow::Result<()> {
 
             // yellow rubber
             {
-                rgl::uniform_matrix_4f32v(
+                rgl::uniform_matrix_4f32v_flat(
                     cube_model,
                     rgl::MatrixOrderMajor::Row,
                     &[from_glm(&glm::translate(
@@ -672,8 +676,12 @@ fn main() -> anyhow::Result<()> {
         }
         {
             rgl::use_program(light_shader_program);
-            rgl::uniform_matrix_4f32v(light_view, rgl::MatrixOrderMajor::Row, &[from_glm(&view)]);
-            rgl::uniform_matrix_4f32v(
+            rgl::uniform_matrix_4f32v_flat(
+                light_view,
+                rgl::MatrixOrderMajor::Row,
+                &[from_glm(&view)],
+            );
+            rgl::uniform_matrix_4f32v_flat(
                 light_model,
                 rgl::MatrixOrderMajor::Row,
                 &[from_glm(&glm::scale(
@@ -681,7 +689,7 @@ fn main() -> anyhow::Result<()> {
                     &glm::make_vec3(&LIGHT_SCALE),
                 ))],
             );
-            rgl::uniform_matrix_4f32v(
+            rgl::uniform_matrix_4f32v_flat(
                 light_model,
                 rgl::MatrixOrderMajor::Row,
                 &[from_glm(&glm::scale(

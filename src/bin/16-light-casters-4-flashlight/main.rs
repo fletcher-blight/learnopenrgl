@@ -393,8 +393,12 @@ fn main() -> anyhow::Result<()> {
                 camera_front[2],
             );
 
-            rgl::uniform_matrix_4f32v(cube_view, rgl::MatrixOrderMajor::Row, &[from_glm(&view)]);
-            rgl::uniform_matrix_4f32v(
+            rgl::uniform_matrix_4f32v_flat(
+                cube_view,
+                rgl::MatrixOrderMajor::Row,
+                &[from_glm(&view)],
+            );
+            rgl::uniform_matrix_4f32v_flat(
                 cube_projection,
                 rgl::MatrixOrderMajor::Row,
                 &[from_glm(&projection)],
@@ -412,7 +416,7 @@ fn main() -> anyhow::Result<()> {
             rgl::bind_texture(rgl::TextureBindingTarget::Image2D, specular_texture);
 
             for (i, cube_position) in cube_positions.iter().enumerate() {
-                rgl::uniform_matrix_4f32v(
+                rgl::uniform_matrix_4f32v_flat(
                     cube_model,
                     rgl::MatrixOrderMajor::Row,
                     &[from_glm(&glm::rotate(
