@@ -4,3 +4,4 @@
 //! [learnopengl](https://learnopengl.com) book.
 
 pub mod book;
+pub mod utils;
