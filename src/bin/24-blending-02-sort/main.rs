@@ -139,9 +139,23 @@ fn main() -> anyhow::Result<()> {
                 rgl::bind_vertex_array(windows_vao);
                 rgl::bind_texture(rgl::TextureBindingTarget::Image2D, texture_window);
 
-                windows.sort_by_key(|position| {
-                    (glm::make_vec3(&camera.get_position()) - glm::make_vec3(position)).len()
+                let quadrance_of = |position: [f32; 3]| {
+                    let cam = camera.get_position();
+                    let direction = [
+                        cam[0] - position[0],
+                        cam[1] - position[1],
+                        cam[2] - position[2],
+                    ];
+                    direction
+                        .into_iter()
+                        .reduce(|total, elem| total + elem.powi(2))
+                        .unwrap()
+                };
+
+                windows.sort_unstable_by(|a, b| {
+                    quadrance_of(*a).partial_cmp(&quadrance_of(*b)).unwrap()
                 });
+
                 for position in windows.iter().rev() {
                     shader_program.set_uniform_mat4_multi(
                         "model",
