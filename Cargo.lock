@@ -921,7 +921,7 @@ checksum = "456c603be3e8d448b072f410900c09faf164fbce2d480456f50eea6e25f9c848"
 [[package]]
 name = "rgl"
 version = "0.1.0"
-source = "git+https://github.com/fletcher-blight/rgl?branch=feature/base-functionality#ca7355325a780565fc45cf96fac22a0d8cbee9f7"
+source = "git+https://github.com/fletcher-blight/rgl?branch=feature/base-functionality#c257361dcd9a51474307c506ef1f3d7c84a7f3be"
 dependencies = [
  "bitflags",
  "gl",
