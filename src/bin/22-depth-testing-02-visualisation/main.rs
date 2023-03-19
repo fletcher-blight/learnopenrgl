@@ -100,7 +100,6 @@ fn main() -> anyhow::Result<()> {
     assert_eq!(rgl::get_error(), rgl::Error::NoError);
 
     rgl::enable(rgl::Capability::DepthTest);
-    rgl::depth_func(rgl::DepthFunc::Less);
     rgl::clear_colour(0.1, 0.1, 0.1, 0.1);
     assert_eq!(rgl::get_error(), rgl::Error::NoError);
 
@@ -120,14 +119,6 @@ fn main() -> anyhow::Result<()> {
                     keycode: Some(sdl2::keyboard::Keycode::Escape),
                     ..
                 } => break 'main,
-                sdl2::event::Event::KeyUp {
-                    keycode: Some(sdl2::keyboard::Keycode::Num1),
-                    ..
-                } => rgl::depth_func(rgl::DepthFunc::Less),
-                sdl2::event::Event::KeyUp {
-                    keycode: Some(sdl2::keyboard::Keycode::Num2),
-                    ..
-                } => rgl::depth_func(rgl::DepthFunc::Always),
                 event => learnopenrgl::utils::process_sdl_event(&mut camera, event),
             }
         }
