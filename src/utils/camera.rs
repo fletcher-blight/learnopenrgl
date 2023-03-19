@@ -40,6 +40,10 @@ impl Camera {
         }
     }
 
+    pub fn get_position(&self) -> [f32; 3] {
+        self.position
+    }
+
     fn set_move_direction(&mut self, direction: MovementDirection, amount: f32) {
         let index = direction.as_request_index();
         self.movement_request[index] = amount;
