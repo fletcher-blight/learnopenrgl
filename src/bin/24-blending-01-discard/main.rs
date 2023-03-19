@@ -73,7 +73,6 @@ fn main() -> anyhow::Result<()> {
     assert_eq!(rgl::get_error(), rgl::Error::NoError);
 
     rgl::enable(rgl::Capability::DepthTest);
-    rgl::depth_func(rgl::CompareFunc::Less);
     rgl::clear_colour(0.1, 0.1, 0.1, 0.1);
     assert_eq!(rgl::get_error(), rgl::Error::NoError);
 
