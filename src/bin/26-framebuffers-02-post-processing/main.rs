@@ -205,6 +205,18 @@ fn main() -> anyhow::Result<()> {
                     keycode: Some(sdl2::keyboard::Keycode::Num1),
                     ..
                 } => fragment_function = FragmentFunction::Inversion,
+                sdl2::event::Event::KeyUp {
+                    keycode: Some(sdl2::keyboard::Keycode::Num2),
+                    ..
+                } => fragment_function = FragmentFunction::GreyScale,
+                sdl2::event::Event::KeyUp {
+                    keycode: Some(sdl2::keyboard::Keycode::Num3),
+                    ..
+                } => fragment_function = FragmentFunction::GreyScaleWeighted,
+                sdl2::event::Event::KeyUp {
+                    keycode: Some(sdl2::keyboard::Keycode::Num4),
+                    ..
+                } => fragment_function = FragmentFunction::Sharpen,
                 event => learnopenrgl::utils::process_sdl_event(&mut camera, event),
             }
         }
@@ -457,6 +469,9 @@ fn get_quad_data() -> &'static [f32] {
 enum FragmentFunction {
     Plain,
     Inversion,
+    GreyScale,
+    GreyScaleWeighted,
+    Sharpen,
 }
 
 impl From<FragmentFunction> for i32 {
@@ -464,6 +479,9 @@ impl From<FragmentFunction> for i32 {
         match value {
             FragmentFunction::Plain => 0,
             FragmentFunction::Inversion => 1,
+            FragmentFunction::GreyScale => 2,
+            FragmentFunction::GreyScaleWeighted => 3,
+            FragmentFunction::Sharpen => 4,
         }
     }
 }
