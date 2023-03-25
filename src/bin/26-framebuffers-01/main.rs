@@ -21,8 +21,6 @@ fn main() -> anyhow::Result<()> {
 
     // ============================================================================================
 
-    rgl::enable(rgl::Capability::DepthTest);
-
     let framebuffer_shader_program = learnopenrgl::utils::Program::new(&[
         learnopenrgl::utils::Shader::new(include_str!("framebuffer.vert"), rgl::ShaderType::Vertex),
         learnopenrgl::utils::Shader::new(
@@ -182,6 +180,7 @@ fn main() -> anyhow::Result<()> {
 
     // ============================================================================================
 
+    let mut inception = false;
     let mut camera = learnopenrgl::utils::Camera::new();
     let mut frame = learnopenrgl::utils::Frame::new_now();
 
@@ -196,12 +195,16 @@ fn main() -> anyhow::Result<()> {
                     keycode: Some(sdl2::keyboard::Keycode::Escape),
                     ..
                 } => break 'main,
+                sdl2::event::Event::KeyUp {
+                    keycode: Some(sdl2::keyboard::Keycode::I),
+                    ..
+                } => {
+                    inception = !inception;
+                }
                 event => learnopenrgl::utils::process_sdl_event(&mut camera, event),
             }
         }
         camera.update_position(frame.last_frame_duration(), 3.0);
-
-        rgl::clear(rgl::ClearMask::COLOUR | rgl::ClearMask::DEPTH);
 
         {
             {
@@ -213,9 +216,9 @@ fn main() -> anyhow::Result<()> {
                 );
 
                 rgl::bind_framebuffer(rgl::FramebufferBindingTarget::ReadDraw, fbo);
+                rgl::enable(rgl::Capability::DepthTest);
                 rgl::clear_colour(0.1, 0.1, 0.1, 0.1);
                 rgl::clear(rgl::ClearMask::COLOUR | rgl::ClearMask::DEPTH);
-                rgl::enable(rgl::Capability::DepthTest);
                 assert_eq!(rgl::get_error(), rgl::Error::NoError);
 
                 {
@@ -233,20 +236,39 @@ fn main() -> anyhow::Result<()> {
                     rgl::bind_vertex_array(rgl::VertexArray::default());
                     assert_eq!(rgl::get_error(), rgl::Error::NoError);
                 }
-
-                rgl::bind_framebuffer(
-                    rgl::FramebufferBindingTarget::ReadDraw,
-                    rgl::Framebuffer::default(),
-                );
             }
-            {
-                screen_shader_program.enable();
 
+            rgl::bind_framebuffer(
+                rgl::FramebufferBindingTarget::ReadDraw,
+                rgl::Framebuffer::default(),
+            );
+            rgl::clear_colour(0.1, 0.1, 0.1, 0.1);
+            rgl::clear(rgl::ClearMask::COLOUR | rgl::ClearMask::DEPTH);
+
+            if !inception {
+                screen_shader_program.enable();
                 rgl::disable(rgl::Capability::DepthTest);
-                rgl::bind_vertex_array(quad_vao);
-                rgl::bind_texture(rgl::TextureBindingTarget::Image2D, texture_buffer);
+                assert_eq!(rgl::get_error(), rgl::Error::NoError);
+
+                {
+                    rgl::bind_vertex_array(quad_vao);
+                    rgl::bind_texture(rgl::TextureBindingTarget::Image2D, texture_buffer);
+                    rgl::draw_arrays(rgl::DrawMode::Triangles, 0, 6);
+                    rgl::bind_vertex_array(rgl::VertexArray::default());
+                    assert_eq!(rgl::get_error(), rgl::Error::NoError);
+                }
+            } else {
+                rgl::bind_vertex_array(plane_vao);
+                rgl::bind_texture(rgl::TextureBindingTarget::Image2D, texture_metal);
                 rgl::draw_arrays(rgl::DrawMode::Triangles, 0, 6);
                 rgl::bind_vertex_array(rgl::VertexArray::default());
+                assert_eq!(rgl::get_error(), rgl::Error::NoError);
+
+                rgl::bind_vertex_array(cube_vao);
+                rgl::bind_texture(rgl::TextureBindingTarget::Image2D, texture_buffer);
+                draw_container_cubes(&framebuffer_shader_program);
+                rgl::bind_vertex_array(rgl::VertexArray::default());
+                assert_eq!(rgl::get_error(), rgl::Error::NoError);
             }
         }
 
