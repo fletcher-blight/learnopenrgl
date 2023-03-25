@@ -59,6 +59,16 @@ void sharpen() {
     apply_kernel(kernel);
 }
 
+void blur() {
+    float kernel[9] = float[](1.0 / 16.0, 2.0 / 16.0, 1.0 / 16.0, 2.0 / 16.0, 4.0 / 16.0, 2.0 / 16.0, 1.0 / 16.0, 2.0 / 16.0, 1.0 / 16.0);
+    apply_kernel(kernel);
+}
+
+void edge_detection() {
+    float kernel[9] = float[](1, 1, 1, 1, -8, 1, 1, 1, 1);
+    apply_kernel(kernel);
+}
+
 void main() {
     switch (fragment_function) {
         case 1:
@@ -72,6 +82,12 @@ void main() {
             break;
         case 4:
             sharpen();
+            break;
+        case 5:
+            blur();
+            break;
+        case 6:
+            edge_detection();
             break;
         default:
             plain();

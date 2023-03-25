@@ -11,7 +11,7 @@ fn main() -> anyhow::Result<()> {
     }
     sdl.mouse().set_relative_mouse_mode(true);
     let window = video
-        .window("LearnOpenGL: Framebuffers", 1920, 1080)
+        .window("LearnOpenGL: Framebuffers - Post Processing", 1920, 1080)
         .opengl()
         .resizable()
         .build()?;
@@ -217,6 +217,14 @@ fn main() -> anyhow::Result<()> {
                     keycode: Some(sdl2::keyboard::Keycode::Num4),
                     ..
                 } => fragment_function = FragmentFunction::Sharpen,
+                sdl2::event::Event::KeyUp {
+                    keycode: Some(sdl2::keyboard::Keycode::Num5),
+                    ..
+                } => fragment_function = FragmentFunction::Blur,
+                sdl2::event::Event::KeyUp {
+                    keycode: Some(sdl2::keyboard::Keycode::Num6),
+                    ..
+                } => fragment_function = FragmentFunction::EdgeDetection,
                 event => learnopenrgl::utils::process_sdl_event(&mut camera, event),
             }
         }
@@ -472,6 +480,8 @@ enum FragmentFunction {
     GreyScale,
     GreyScaleWeighted,
     Sharpen,
+    Blur,
+    EdgeDetection,
 }
 
 impl From<FragmentFunction> for i32 {
@@ -482,6 +492,8 @@ impl From<FragmentFunction> for i32 {
             FragmentFunction::GreyScale => 2,
             FragmentFunction::GreyScaleWeighted => 3,
             FragmentFunction::Sharpen => 4,
+            FragmentFunction::Blur => 5,
+            FragmentFunction::EdgeDetection => 6,
         }
     }
 }
