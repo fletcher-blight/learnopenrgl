@@ -49,9 +49,18 @@ impl Camera {
         self.movement_request[index] = amount;
     }
 
-    fn move_view(&mut self, x_offset: f32, y_offset: f32) {
+    pub fn move_view(&mut self, x_offset: f32, y_offset: f32) {
         self.yaw += x_offset;
         self.pitch = (self.pitch + y_offset).clamp(-89.0, 89.0);
+    }
+
+    pub fn get_yaw_pitch(&self) -> (f32, f32) {
+        (self.yaw, self.pitch)
+    }
+
+    pub fn set_yaw_pitch(&mut self, yaw: f32, pitch: f32) {
+        self.yaw = yaw;
+        self.pitch = pitch;
     }
 
     pub fn update_position(&mut self, frame_duration: std::time::Duration, sensitivity: f32) {
